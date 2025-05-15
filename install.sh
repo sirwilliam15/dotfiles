@@ -28,6 +28,15 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
             ln -sf "$HOME/.dotfiles/macos/$config" "$HOME/$config"
         fi
     done
+
+    if [[ -f "/opt/homebrew/bin/oh-my-posh" ]]; then
+        echo "Oh My Posh already installed."
+    else
+        echo "Oh My Posh not installed, installing..."
+        brew install jandedobbeleer/oh-my-posh/oh-my-posh
+    fi
+    
+
 fi
 
 echo "Installation complete"

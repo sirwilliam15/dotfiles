@@ -6,6 +6,8 @@ if [[ -f "$HOME/.env" ]]; then
     set +a  # stop automatically exporting
 fi
 
+eval "$(oh-my-posh init bash)"
+
 # alias commands
 
 alias ll='ls -alF'

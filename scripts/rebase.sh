@@ -3,7 +3,9 @@
 original_branch=$(git branch --show-current)
 head_branch=$(git remote show origin | grep -oP 'HEAD branch: \K.*')
 
-git checkout $head_branch
+if [[ "$original_branch" != "$head_branch" ]]; then
+    git checkout $head_branch
+fi
 
 git pull --rebase upstream $original_branch
 git push

@@ -1,5 +1,5 @@
 ctrl + shift - 1 : yabai -m window --grid 3:7:0:0:2:2  # Top Left View
-ctrl + shift - 2 : yabai -m window --grid 3:7:2:0:3:2  # Middle Priority View
+ctrl + shift - 2 : yabai -m window --grid 1:7:2:0:3:1  # Middle Priority View
 ctrl + shift - 3 : yabai -m window --grid 1:7:5:0:2:1
 ctrl + shift - 4 : yabai -m window --grid 1:7:2:0:5:1
 # ctrl + shift - 5 : yabai -m window --grid 3:7:11:0:2:2

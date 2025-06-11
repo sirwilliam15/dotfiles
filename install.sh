@@ -17,8 +17,13 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
             echo "Would you like to overwrite $config? (y/n)"
             read -r overwrite
             if [[ "$overwrite" == "y" ]]; then
-                echo "Backing up $HOME/$config to $dir/backup/$config"
-                mv "$HOME/$config" "$dir/backup/$config"
+                if [ -L "$HOME/$config" ]; then
+                    echo "$config is a symlink. Removing."
+                    rm "$HOME/$config"
+                else
+                    echo "Backing up $HOME/$config to $dir/backup/$config"
+                    mv "$HOME/$config" "$dir/backup/$config"
+                fi
                 echo "Creating symlink for $config"
                 ln -sf "$dir/macos/$config" "$HOME/$config"
                 echo "Overwritten $config"

@@ -6,3 +6,4 @@ source "$HOME/.dotfiles/rc_common.sh"
 export PATH="/opt/homebrew/bin:$PATH"
 
 alias grep="/opt/homebrew/bin/ggrep"
+alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"

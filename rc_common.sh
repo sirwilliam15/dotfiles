@@ -18,8 +18,8 @@ alias ldesc='ls -lahS'
 
 alias duh='du -h --max-depth=1'
 
-alias clone="$HOME/.dotfiles/scripts/configure-repo.sh"
-alias rebase="$HOME/.dotfiles/scripts/rebase.sh"
+alias clone="$DOTFILES/scripts/configure-repo.sh"
+alias rebase="$DOTFILES/scripts/rebase.sh"
 
 # Ceph Docker function
 ceph-cli() {

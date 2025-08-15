@@ -5,14 +5,14 @@ mkdir -p "$dir/backup"
 if [[ "$OSTYPE" == "darwin"* ]]; then
     # Loop through specific config files
     for config in ".yabairc" ".skhdrc" ".bashrc"; do
+        if [[ "$config" == ".bashrc" ]]; then
+            echo "Adding source to $HOME/$config"
+            echo "export DOTFILES=$dir" >> "$HOME/$config"
+            echo 'source "$DOTFILES/macos/.bashrc"' >> "$HOME/$config"
+            continue
+        fi
         if [[ -f "$HOME/$config" ]]; then
             echo "Found $config"
-            if [[ "$config" == ".bashrc" ]]; then
-                echo "Adding source to $HOME/$config"
-                echo "export DOTFILES=$dir" >> "$HOME/$config"
-                echo 'source "$DOTFILES/macos/.bashrc"' >> "$HOME/$config"
-                continue
-            fi
             # Add your commands here to handle each config file
             echo "Would you like to overwrite $config? (y/n)"
             read -r overwrite

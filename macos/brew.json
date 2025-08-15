@@ -1,5 +1,6 @@
 {
     "terminal": [
+        "bash",
         "bash-completion@2",
         "grep",
         "neovim",

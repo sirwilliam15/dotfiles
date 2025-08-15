@@ -43,7 +43,7 @@ _dotfiles_install() {
             echo "-----
 To run bash on ghostty properly run the following command:
 
-echo 'command=/opt/homebrew/bin/bash;exec bash' >> \"$HOME/Library/Application\ Support/com.mitchellh.ghostty/config\"
+echo 'command=/opt/homebrew/bin/bash;exec bash' >> \"$HOME/Library/Application\\ Support/com.mitchellh.ghostty/config\"
 -----"
         fi
     done <<< "$packages"

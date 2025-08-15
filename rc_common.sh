@@ -32,3 +32,13 @@ ceph-cli() {
         quay.io/ceph/ceph:${version} \
         /bin/bash
 }
+
+minio-local() {
+    docker run -it --rm \
+        -v /tmp/minio:/data \
+        -p 9000:9000 \
+        -p 9001:9001 \
+        -e "MINIO_ROOT_USER=$AWS_ACCESS_KEY_ID" \
+        -e "MINIO_ROOT_PASSWORD=$AWS_SECRET_ACCESS_KEY" \
+        quay.io/minio/minio server /data --console-address ":9001"
+}

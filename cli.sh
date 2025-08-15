@@ -38,6 +38,14 @@ _dotfiles_install() {
     while IFS= read -r pkg; do
         echo ">>>> Installing $pkg"
         "$PKG_INSTALLER" install "$pkg"
+
+        if [[ "$pkg" == "ghostty" ]]; then
+            echo "-----
+To run bash on ghostty properly run the following command:
+
+echo 'command=/opt/homebrew/bin/bash;exec bash' >> \"$HOME/Library/Application\ Support/com.mitchellh.ghostty/config\"
+-----"
+        fi
     done <<< "$packages"
 
 }

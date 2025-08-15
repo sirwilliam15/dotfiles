@@ -1,0 +1,6 @@
+bash-completion@2
+grep
+koekeishiya/formulae/skhd
+koekeishiya/formulae/yabai
+neovim
+oh-my-posh

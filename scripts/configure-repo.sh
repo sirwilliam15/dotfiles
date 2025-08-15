@@ -11,7 +11,7 @@ configure_git_user() {
         return 1
     fi
 
-    echo "Configuring Git user and email..."
+    echo "------ Configuring Git user and email ------"
     git config user.name "$GIT_USER"
     git config user.email "$GIT_EMAIL"
     return 0
@@ -48,14 +48,14 @@ cd "$REPO_NAME" || exit 1
 configure_git_user
 
 # Add the original repository as upstream remote
-echo "Adding upstream remote..."
+echo "------ Adding upstream remote ------"
 if ! git remote add upstream "$ORIGINAL_REPO"; then
     echo "Error: Failed to add upstream remote"
     exit 1
 fi
 
 # Verify the remotes and configuration
-echo -e "\nRepository setup complete!"
+echo -e "\n------ Repository setup complete ------"
 echo "Current remotes:"
 git remote -v
 echo -e "\nGit configuration:"

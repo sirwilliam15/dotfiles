@@ -35,7 +35,11 @@ echo "Forked repo: $FORKED_REPO"
 echo "Original repo: $ORIGINAL_REPO"
 
 # Clone the forked repository
-echo "Cloning forked repository..."
+echo "------ Cloning forked repository ------"
+if [[ "$FORKED_REPO" == git@* || "$FORKED_REPO" == ssh://* ]]; then
+    eval $(ssh-agent)
+    ssh-add "$HOME/.ssh/id_rsa"
+fi
 if ! git clone "$FORKED_REPO"; then
     echo "Error: Failed to clone the forked repository"
     exit 1

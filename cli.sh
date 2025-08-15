@@ -23,7 +23,7 @@ dotfiles() {
     local action=$1
     local list=$2
 
-    local packages=$(jq -r ".$list | [.. | arrays | .[]] .[]" "$PKG_LIST")
+    local packages=$(jq -r ".$list | .. | arrays | .[]" "$PKG_LIST")
     
     if [[ "$action" == "install" ]]; then
 

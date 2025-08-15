@@ -1,0 +1,37 @@
+{
+    "terminal": [
+        "bash-completion@2",
+        "grep",
+        "neovim",
+        "oh-my-posh",
+        "ghostty",
+        "font-caskaydia-cove-nerd-font"
+    ],
+    "desktop": [
+        "mos",
+        "caffeine",
+        "alt-tab",
+        "koekeishiya/formulae/skhd",
+        "koekeishiya/formulae/yabai"
+    ],
+    "apps": {
+        "dev": [
+            "docker",
+            "node",
+            "vscodium",
+            "pyenv"
+        ],
+        "desktop": [
+            "brave-browser",
+            "librewolf",
+            "duckduckgo",
+            "discord",
+            "thunderbird"
+        ],
+        "nextcloud": [
+            "nextcloud",
+            "obsidian",
+            "logseq"
+        ]
+    }
+}

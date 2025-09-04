@@ -1,10 +1,10 @@
-ctrl + shift - 1 : yabai -m window --grid 3:7:0:0:2:2  # Top Left View
-ctrl + shift - 2 : yabai -m window --grid 1:7:2:0:3:1  # Middle Priority View
-ctrl + shift - 3 : yabai -m window --grid 1:7:5:0:2:1
-ctrl + shift - 4 : yabai -m window --grid 1:7:2:0:5:1
+ctrl + shift - 1 : source ~/.bashrc && "$DOTFILES/scripts/spaces.sh" west
+ctrl + shift - 2 : source ~/.bashrc && "$DOTFILES/scripts/spaces.sh" north
+ctrl + shift - 3 : source ~/.bashrc && "$DOTFILES/scripts/spaces.sh" east
+ctrl + shift - 4 : source ~/.bashrc && "$DOTFILES/scripts/spaces.sh" priority
 # ctrl + shift - 5 : yabai -m window --grid 3:7:11:0:2:2
 
-ctrl + shift - q : yabai -m window --grid 3:7:0:2:2:1  # Bottom Left View
+ctrl + shift - q : source ~/.bashrc && "$DOTFILES/scripts/spaces.sh" south
 ctrl + shift - w : yabai -m window --grid 3:9:7:2:2:1
 
 ctrl + shift - b : yabai -m config layout bsp && yabai -m space --balance

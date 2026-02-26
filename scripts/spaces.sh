@@ -6,8 +6,13 @@
 
 _get_screen_resolution() {
   # Get the primary display resolution
-  local resolution=$(system_profiler SPDisplaysDataType | grep Resolution | head -1 | awk '{print $2, $4}')
-  echo "$resolution"
+  local display_id
+
+  display_id=$(yabai -m query --windows --window 2>/dev/null | jq -r '.display') || return 1
+
+  yabai -m query --displays \
+    | jq -r --argjson id "$display_id" \
+      '.[] | select(.index == $id) | "\(.frame.w|floor) \(.frame.h|floor)"'
 }
 
 _get_aspect_ratio() {

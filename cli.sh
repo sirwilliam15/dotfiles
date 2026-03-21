@@ -39,7 +39,15 @@ _dotfiles_install() {
         echo ">>>> Installing $pkg"
         "$PKG_INSTALLER" install "$pkg"
 
-        if [[ "$pkg" == "ghostty" ]]; then
+        if [[ "$pkg" == "bash" ]]; then
+            echo "-----
+To change bash to default, run the following:
+
+sudo nano /etc/shells
+** Add /opt/homebrew/bin/bash
+chsh -s /opt/homebrew/bin/bash
+-----"
+        elif [[ "$pkg" == "ghostty" ]]; then
             echo "-----
 To run bash on ghostty properly run the following command:
 

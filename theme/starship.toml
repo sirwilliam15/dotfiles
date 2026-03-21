@@ -1,0 +1,31 @@
+# Starship Prompt — Everforest + Nord blend
+# Place at ~/.config/starship.toml
+
+format = """
+[╭─](bold green)\
+$directory\
+$git_branch\
+$git_status\
+$cmd_duration\
+$line_break\
+[╰─](bold green)$character"""
+
+[directory]
+style = "bold #a7c080"          # Everforest green
+truncation_length = 3
+repo_root_style = "bold #83c092"
+
+[git_branch]
+symbol = " "
+style = "bold #81a1c1"          # Nord Frost blue
+
+[git_status]
+style = "bold #e67e80"          # Everforest red
+
+[character]
+success_symbol = "[❯](bold #a7c080)"   # Everforest green
+error_symbol = "[❯](bold #e67e80)"     # Everforest red
+
+[cmd_duration]
+min_time = 500
+style = "bold #dbbc7f"          # Everforest yellow

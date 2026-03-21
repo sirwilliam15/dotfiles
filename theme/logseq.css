@@ -1,0 +1,276 @@
+/* Everforest + Nord Blend — Logseq Custom Theme
+ * Place in: <graph>/.logseq/custom.css
+ * Or paste into Settings → Custom CSS
+ */
+
+:root {
+  /* ── Base ── */
+  --ls-primary-background-color:      #1e2326;
+  --ls-secondary-background-color:    #272e33;
+  --ls-tertiary-background-color:     #2d3b41;
+  --ls-quaternary-background-color:   #2d3b41;
+
+  /* ── Text ── */
+  --ls-primary-text-color:            #d3c6aa;
+  --ls-secondary-text-color:          #7a8478;
+
+  /* ── Accent ── */
+  --ls-link-text-color:               #81a1c1;
+  --ls-link-ref-text-color:           #a7c080;
+  --ls-link-ref-text-hover-color:     #83c092;
+  --ls-active-primary-color:          #81a1c1;
+  --ls-active-secondary-color:        #88c0d0;
+  --ls-tag-text-color:                #88c0d0;
+  --ls-tag-text-hover-color:          #8fbcbb;
+
+  /* ── Block ── */
+  --ls-block-bullet-color:            #7a8478;
+  --ls-block-bullet-active-color:     #a7c080;
+  --ls-block-highlight-color:         rgba(129, 161, 193, 0.15);
+  --ls-block-bullet-border-color:     #2d3b41;
+
+  /* ── Borders ── */
+  --ls-border-color:                  #2d3b41;
+  --ls-guideline-color:               rgba(45, 59, 65, 0.6);
+
+  /* ── Selection ── */
+  --ls-selection-background-color:    rgba(129, 161, 193, 0.25);
+  --ls-block-selected-background-color: rgba(129, 161, 193, 0.15);
+
+  /* ── Scrollbar ── */
+  --ls-scrollbar-foreground-color:    rgba(122, 132, 120, 0.3);
+  --ls-scrollbar-background-color:    transparent;
+
+  /* ── Header bar ── */
+  --ls-header-button-background:      #272e33;
+  --ls-left-sidebar-background-color: #1e2326;
+  --ls-right-sidebar-background-color:#1e2326;
+
+  /* ── Search ── */
+  --ls-search-background-color:       #272e33;
+
+  /* ── Icons ── */
+  --ls-icon-color:                    #d3c6aa;
+
+  /* ── Fonts ── */
+  --ls-font-family:                   'Geist Mono', 'CaskaydiaCove Nerd Font', monospace;
+}
+
+html[data-theme="dark"] {
+  --ls-primary-background-color:      #1e2326;
+  --ls-secondary-background-color:    #272e33;
+  --ls-tertiary-background-color:     #2d3b41;
+  --ls-primary-text-color:            #d3c6aa;
+  --ls-secondary-text-color:          #7a8478;
+  --ls-link-text-color:               #81a1c1;
+  --ls-active-primary-color:          #81a1c1;
+}
+
+/* ── Headings ── */
+.ls-block h1,
+.editor-inner .uniline-block h1 {
+  color: #a7c080;
+  font-weight: 700;
+}
+.ls-block h2,
+.editor-inner .uniline-block h2 {
+  color: #83c092;
+  font-weight: 600;
+}
+.ls-block h3,
+.editor-inner .uniline-block h3 {
+  color: #7fbbb3;
+  font-weight: 600;
+}
+.ls-block h4,
+.editor-inner .uniline-block h4 {
+  color: #81a1c1;
+}
+.ls-block h5,
+.editor-inner .uniline-block h5 {
+  color: #dbbc7f;
+}
+.ls-block h6,
+.editor-inner .uniline-block h6 {
+  color: #d699b6;
+}
+
+/* ── Bold & italic ── */
+.ls-block strong {
+  color: #e69875;
+}
+.ls-block em {
+  color: #d699b6;
+}
+
+/* ── Code ── */
+.ls-block code,
+:not(pre) > code {
+  background: #272e33;
+  color: #83c092;
+  border-radius: 4px;
+  padding: 2px 5px;
+  border: none;
+}
+
+.ls-block pre,
+.ls-block pre > code {
+  background: #272e33;
+  border: 1px solid #2d3b41;
+  border-radius: 8px;
+  color: #d3c6aa;
+}
+
+/* ── Blockquotes ── */
+.ls-block blockquote {
+  border-left: 3px solid #5e81ac;
+  background: rgba(39, 46, 51, 0.5);
+  color: #d8dee9;
+  border-radius: 0 8px 8px 0;
+  padding: 8px 12px;
+}
+
+/* ── Tags ── */
+a.tag {
+  color: #88c0d0 !important;
+  background: rgba(136, 192, 208, 0.1);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+a.tag:hover {
+  color: #8fbcbb !important;
+  background: rgba(136, 192, 208, 0.2);
+}
+
+/* ── Page references ── */
+.page-reference .bracket {
+  color: #543a48;
+}
+.page-reference {
+  color: #a7c080;
+}
+.page-reference:hover {
+  color: #83c092;
+}
+
+/* ── External links ── */
+.external-link {
+  color: #81a1c1;
+}
+.external-link:hover {
+  color: #88c0d0;
+}
+
+/* ── Block references ── */
+.block-ref {
+  border-bottom: 1px dashed #5e81ac;
+}
+.block-ref:hover {
+  background: rgba(129, 161, 193, 0.1);
+}
+
+/* ── Tables ── */
+.ls-block table th {
+  background: #272e33;
+  color: #a7c080;
+  font-weight: 600;
+}
+.ls-block table td {
+  border-color: #2d3b41;
+}
+.ls-block table tr:nth-child(even) {
+  background: rgba(39, 46, 51, 0.3);
+}
+
+/* ── Sidebar ── */
+.left-sidebar-inner {
+  background: #1e2326;
+}
+.left-sidebar-inner a,
+.left-sidebar-inner .nav-content-item,
+.left-sidebar-inner .favorite-item,
+.left-sidebar-inner .recent-item,
+.left-sidebar-inner .nav-content-item .header {
+  color: #d3c6aa;
+}
+.left-sidebar-inner .nav-content-item:hover,
+.left-sidebar-inner .favorite-item:hover,
+.left-sidebar-inner .recent-item:hover {
+  background: #2d3b41;
+  color: #d8dee9;
+}
+.left-sidebar-inner .nav-content-item.is-expand > .header,
+.left-sidebar-inner .active {
+  color: #a7c080;
+}
+.left-sidebar-inner svg,
+.left-sidebar-inner .ui__icon {
+  color: #7fbbb3;
+  opacity: 1;
+}
+
+/* ── Right sidebar ── */
+#right-sidebar {
+  background: #1e2326;
+  border-left: 1px solid #2d3b41;
+}
+
+/* ── Properties ── */
+.block-properties {
+  background: rgba(39, 46, 51, 0.3);
+  border: 1px solid #2d3b41;
+  border-radius: 8px;
+}
+
+/* ── TODO / DONE markers ── */
+.form-checkbox {
+  border-color: #7a8478;
+  accent-color: #81a1c1;
+}
+
+.doing-label {
+  color: #dbbc7f;
+}
+.done-label {
+  color: #a7c080;
+}
+.todo-label {
+  color: #e67e80;
+}
+
+/* ── Horizontal rule ── */
+.ls-block hr {
+  border-color: #2d3b41;
+}
+
+/* ── Search & command palette ── */
+.cp__palette {
+  background: #272e33;
+  border: 1px solid #2d3b41;
+  border-radius: 12px;
+}
+.cp__palette input {
+  background: #1e2326;
+  color: #d3c6aa;
+}
+.cp__palette .chosen {
+  background: rgba(129, 161, 193, 0.15);
+}
+
+/* ── Top bar ── */
+.cp__header a,
+.cp__header button,
+.cp__header .ui__icon,
+.cp__header svg {
+  color: #d3c6aa;
+  opacity: 1;
+}
+.cp__header a:hover,
+.cp__header button:hover {
+  color: #88c0d0;
+}
+
+/* ── Journal title ── */
+.journal-title {
+  color: #a7c080;
+}

@@ -1,0 +1,208 @@
+/* Everforest + Nord Blend — Obsidian Theme Snippet
+ * Place in: <vault>/.obsidian/snippets/everforest-nord.css
+ * Enable via: Settings → Appearance → CSS Snippets
+ */
+
+body.theme-dark {
+  /* ── Base colors ── */
+  --background-primary:          #1e2326;
+  --background-primary-alt:      #272e33;
+  --background-secondary:        #272e33;
+  --background-secondary-alt:    #2d3b41;
+  --background-modifier-border:  #2d3b41;
+  --background-modifier-form-field: #272e33;
+  --background-modifier-form-field-highlighted: #2d3b41;
+  --background-modifier-box-shadow: rgba(0, 0, 0, 0.3);
+  --background-modifier-success: #a7c080;
+  --background-modifier-error:   #e67e80;
+  --background-modifier-error-rgb: 230, 126, 128;
+  --background-modifier-error-hover: #e67e80;
+  --background-modifier-cover:   rgba(30, 35, 38, 0.8);
+
+  /* ── Text ── */
+  --text-normal:                 #d3c6aa;
+  --text-muted:                  #7a8478;
+  --text-faint:                  #543a48;
+  --text-error:                  #e67e80;
+  --text-error-hover:            #e67e80;
+  --text-highlight-bg:           rgba(129, 161, 193, 0.2);
+  --text-highlight-bg-active:    rgba(129, 161, 193, 0.3);
+  --text-selection:              rgba(129, 161, 193, 0.25);
+  --text-on-accent:              #1e2326;
+  --text-accent:                 #81a1c1;
+  --text-accent-hover:           #88c0d0;
+
+  /* ── Interactive accent ── */
+  --interactive-normal:          #272e33;
+  --interactive-hover:           #2d3b41;
+  --interactive-accent:          #81a1c1;
+  --interactive-accent-rgb:      129, 161, 193;
+  --interactive-accent-hover:    #88c0d0;
+  --interactive-before:          #543a48;
+
+  /* ── Scrollbar ── */
+  --scrollbar-bg:                rgba(30, 35, 38, 0.05);
+  --scrollbar-thumb-bg:          rgba(122, 132, 120, 0.3);
+  --scrollbar-active-thumb-bg:   rgba(122, 132, 120, 0.5);
+
+  /* ── Headings ── */
+  --h1-color:                    #a7c080;
+  --h2-color:                    #83c092;
+  --h3-color:                    #7fbbb3;
+  --h4-color:                    #81a1c1;
+  --h5-color:                    #dbbc7f;
+  --h6-color:                    #d699b6;
+
+  /* ── Tags, links ── */
+  --tag-color:                   #88c0d0;
+  --tag-background:              rgba(136, 192, 208, 0.1);
+  --tag-color-hover:             #8fbcbb;
+  --tag-background-hover:        rgba(136, 192, 208, 0.2);
+
+  /* ── Code ── */
+  --code-normal:                 #d3c6aa;
+  --code-background:             #272e33;
+  --code-white-space:            pre-wrap;
+
+  /* ── Checkbox ── */
+  --checkbox-color:              #81a1c1;
+  --checkbox-color-hover:        #88c0d0;
+  --checkbox-border-color:       #7a8478;
+
+  /* ── Graph ── */
+  --graph-line:                  rgba(122, 132, 120, 0.3);
+  --graph-node:                  #81a1c1;
+  --graph-node-focused:          #a7c080;
+  --graph-node-tag:              #88c0d0;
+  --graph-node-attachment:       #dbbc7f;
+}
+
+/* ── Typography ── */
+body.theme-dark {
+  --font-text-theme:             'Geist Mono', 'CaskaydiaCove Nerd Font', monospace;
+  --font-monospace-theme:        'CaskaydiaCove Nerd Font', 'Geist Mono', monospace;
+}
+
+/* ── Heading styles ── */
+.theme-dark .cm-header-1,
+.theme-dark .markdown-preview-view h1 {
+  color: var(--h1-color);
+  font-weight: 700;
+}
+.theme-dark .cm-header-2,
+.theme-dark .markdown-preview-view h2 {
+  color: var(--h2-color);
+  font-weight: 600;
+}
+.theme-dark .cm-header-3,
+.theme-dark .markdown-preview-view h3 {
+  color: var(--h3-color);
+  font-weight: 600;
+}
+.theme-dark .cm-header-4,
+.theme-dark .markdown-preview-view h4 {
+  color: var(--h4-color);
+}
+.theme-dark .cm-header-5,
+.theme-dark .markdown-preview-view h5 {
+  color: var(--h5-color);
+}
+.theme-dark .cm-header-6,
+.theme-dark .markdown-preview-view h6 {
+  color: var(--h6-color);
+}
+
+/* ── Bold & italic ── */
+.theme-dark strong,
+.theme-dark .cm-strong {
+  color: #e69875;
+}
+.theme-dark em,
+.theme-dark .cm-em {
+  color: #d699b6;
+}
+
+/* ── Links ── */
+.theme-dark a,
+.theme-dark .cm-url,
+.theme-dark .cm-link {
+  color: #81a1c1;
+}
+.theme-dark a:hover {
+  color: #88c0d0;
+}
+.theme-dark .internal-link {
+  color: #a7c080;
+}
+.theme-dark .internal-link:hover {
+  color: #83c092;
+}
+
+/* ── Blockquotes ── */
+.theme-dark blockquote,
+.theme-dark .markdown-preview-view blockquote {
+  border-left: 3px solid #5e81ac;
+  background: rgba(39, 46, 51, 0.5);
+  color: #d8dee9;
+}
+
+/* ── Inline & block code ── */
+.theme-dark code {
+  background: #272e33;
+  color: #83c092;
+  border-radius: 4px;
+  padding: 2px 5px;
+}
+.theme-dark pre > code {
+  padding: 0;
+}
+.theme-dark .markdown-preview-view pre {
+  background: #272e33;
+  border: 1px solid #2d3b41;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+/* ── Horizontal rule ── */
+.theme-dark hr {
+  border-color: #2d3b41;
+}
+
+/* ── Tables ── */
+.theme-dark th {
+  background: #272e33;
+  color: #a7c080;
+  font-weight: 600;
+}
+.theme-dark td {
+  border-color: #2d3b41;
+}
+.theme-dark tr:nth-child(even) {
+  background: rgba(39, 46, 51, 0.3);
+}
+
+/* ── Callouts ── */
+.theme-dark .callout {
+  background: rgba(39, 46, 51, 0.5);
+  border-left: 3px solid #81a1c1;
+  border-radius: 8px;
+}
+
+/* ── Sidebar / nav ── */
+.theme-dark .nav-file-title:hover,
+.theme-dark .nav-folder-title:hover {
+  background: #2d3b41;
+  color: #d3c6aa;
+}
+.theme-dark .nav-file-title.is-active {
+  background: rgba(129, 161, 193, 0.15);
+  color: #81a1c1;
+}
+
+/* ── Titlebar & ribbon ── */
+.theme-dark .titlebar {
+  background: #1e2326;
+}
+.theme-dark .side-dock-ribbon {
+  background: #1e2326;
+}

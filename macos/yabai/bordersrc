@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+# JankyBorders config — Everforest+Nord theme
+# Active: Nord blue | Inactive: Everforest muted purple
+
+borders \
+  active_color=0xff81a1c1 \
+  inactive_color=0xff543a48 \
+  width=2.0 \
+  style=round

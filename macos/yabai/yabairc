@@ -1,0 +1,49 @@
+#!/usr/bin/env sh
+
+# Yabai config — Everforest+Nord theme
+# Mirrors Hyprland dwindle layout with matching gaps/opacity
+
+# Layout
+yabai -m config layout float
+# yabai -m config auto_balance off
+
+# Gaps & padding (matching Hyprland 10px outer gaps)
+yabai -m config window_gap 10
+yabai -m config top_padding 10
+yabai -m config bottom_padding 10
+yabai -m config left_padding 10
+yabai -m config right_padding 10
+
+# Opacity (requires SIP disabled)
+# yabai -m config window_opacity on
+# yabai -m config active_window_opacity 1.0
+# yabai -m config normal_window_opacity 0.95
+
+# Focus
+yabai -m config focus_follows_mouse off
+yabai -m config window_origin_display focused
+
+# Reserve top space for SketchyBar
+yabai -m config external_bar all:32:0
+
+# Mouse
+yabai -m config mouse_follows_focus off
+yabai -m config mouse_modifier alt
+yabai -m config mouse_action1 move
+yabai -m config mouse_action2 resize
+
+# Window rules — float system dialogs & utilities
+yabai -m rule --add app="^System Settings$" manage=off
+yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add app="^Calculator$" manage=off
+yabai -m rule --add app="^Karabiner" manage=off
+yabai -m rule --add app="^Archive Utility$" manage=off
+yabai -m rule --add app="^Activity Monitor$" manage=off
+yabai -m rule --add app="^Disk Utility$" manage=off
+yabai -m rule --add app="^Installer$" manage=off
+yabai -m rule --add app="^KeyboardCleanTool$" manage=off
+yabai -m rule --add app="^Font Book$" manage=off
+yabai -m rule --add title="^(Info|Preferences|Settings)$" manage=off
+yabai -m rule --add app="^Finder$" title="^(Copy|Connect|Move|Info|Pref)" manage=off
+
+echo "yabai configuration loaded"

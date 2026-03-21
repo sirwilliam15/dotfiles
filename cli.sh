@@ -5,7 +5,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 else
     PKG_LIST="$DOTFILES/linux/pkg.txt"
     if [ -f /etc/os-release ]; then
-    . /etc/os-release
+        . /etc/os-release
         if [[ "$ID_LIKE" == *debian* ]] || [[ "$ID" == "debian" ]] || [[ "$ID" == "ubuntu" ]]; then
             PKG_INSTALLER="apt"
         elif [[ "$ID_LIKE" == *fedora* ]] || [[ "$ID" == "fedora" ]]; then
@@ -23,6 +23,11 @@ dotfiles() {
     local action=$1
     local list=$2
 
+    if ! command -v jq &>/dev/null; then
+        echo "Error: jq is not installed. Install it first: $PKG_INSTALLER install jq"
+        return 1
+    fi
+
     local packages=$(jq -r ".$list | .. | arrays | .[]" "$PKG_LIST")
     
     if [[ "$action" == "install" ]]; then
@@ -37,7 +42,7 @@ _dotfiles_install() {
     local packages=$1
     while IFS= read -r pkg; do
         echo ">>>> Installing $pkg"
-        "$PKG_INSTALLER" install "$pkg"
+        "$PKG_INSTALLER" install "$pkg" < /dev/null
 
         if [[ "$pkg" == "bash" ]]; then
             echo "-----
@@ -51,7 +56,7 @@ chsh -s /opt/homebrew/bin/bash
             echo "-----
 To run bash on ghostty properly run the following command:
 
-echo 'command=/opt/homebrew/bin/bash;exec bash' >> \"$HOME/Library/Application\\ Support/com.mitchellh.ghostty/config\"
+echo 'command=/opt/homebrew/bin/bash;exec bash' >> \"$HOME/Library/Application Support/com.mitchellh.ghostty/config\"
 -----"
         fi
     done <<< "$packages"

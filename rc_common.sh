@@ -6,7 +6,11 @@ if [[ -f "$HOME/.env" ]]; then
     set +a  # stop automatically exporting
 fi
 
-eval "$(oh-my-posh init bash)"
+eval "$(starship init bash)"
+
+# ls colors
+export CLICOLOR=1
+export LSCOLORS="GxFxCxDxBxegedabagaced"
 
 # alias commands
 
@@ -16,10 +20,10 @@ alias l='ls -CF'
 alias lasc='ls -lahSr'
 alias ldesc='ls -lahS'
 
-alias duh='du -h --max-depth=1'
-
-alias clone="$DOTFILES/scripts/configure-repo.sh"
-alias rebase="$DOTFILES/scripts/rebase.sh"
+if [ -n "$DOTFILES" ]; then
+    alias clone="$DOTFILES/scripts/configure-repo.sh"
+    alias rebase="$DOTFILES/scripts/rebase.sh"
+fi
 
 # Ceph Docker function
 ceph-cli() {

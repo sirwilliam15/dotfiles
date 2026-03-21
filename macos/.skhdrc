@@ -5,7 +5,7 @@ ctrl + shift - 4 : source ~/.bashrc && "$DOTFILES/scripts/spaces.sh" priority
 # ctrl + shift - 5 : yabai -m window --grid 3:7:11:0:2:2
 
 ctrl + shift - q : source ~/.bashrc && "$DOTFILES/scripts/spaces.sh" south
-ctrl + shift - w : yabai -m window --grid 3:9:7:2:2:1
+ctrl + shift - w : source ~/.bashrc && "$DOTFILES/scripts/spaces.sh" northwest
 
 ctrl + shift - b : yabai -m config layout bsp && yabai -m space --balance
 ctrl + shift - f : yabai -m config layout float

@@ -70,6 +70,15 @@ _put_window_in_space() {
         yabai -m window --grid 1:2:1:0:1:2
       fi
       ;;
+    "northwest")
+      if [ "$is_widescreen" -eq 1 ]; then
+        # Widescreen: Top Left View (Northwest) - from .skhdrc
+        yabai -m window --grid 3:7:0:0:2:2
+      else
+        # Standard: Top left corner of screen
+        yabai -m window --grid 2:2:0:0:1:1
+      fi
+      ;;
     "west")
       if [ "$is_widescreen" -eq 1 ]; then
         # Widescreen: Top Left View (West) - from .skhdrc

@@ -1,0 +1,16 @@
+{
+  "name": "everforest-nord-theme",
+  "displayName": "Everforest Nord Blend",
+  "version": "1.0.0",
+  "engines": { "vscode": "^1.60.0" },
+  "categories": ["Themes"],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Everforest Nord Blend",
+        "uiTheme": "vs-dark",
+        "path": "./themes/everforest-nord-theme.json"
+      }
+    ]
+  }
+}

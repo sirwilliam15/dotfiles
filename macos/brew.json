@@ -4,30 +4,46 @@
         "bash-completion@2",
         "grep",
         "neovim",
-        "oh-my-posh",
+        "starship",
         "ghostty",
-        "font-caskaydia-cove-nerd-font"
+        "font-caskaydia-cove-nerd-font",
+        "font-jetbrains-mono-nerd-font",
+        "font-geist-mono-nerd-font"
     ],
     "desktop": [
         "mos",
         "caffeine",
         "alt-tab",
-        "koekeishiya/formulae/skhd",
-        "koekeishiya/formulae/yabai"
+        "asmvik/formulae/skhd",
+        "asmvik/formulae/yabai",
+        "FelixKratz/formulae/borders",
+        "FelixKratz/formulae/sketchybar"
     ],
+    "server": {
+        "ai": ["ollama"]
+    },
     "apps": {
         "dev": [
             "docker",
             "node",
             "vscodium",
-            "pyenv"
+            "pyenv",
+            "go"
+        ],
+        "ai": [
+            "cursor",
+            "claude-code",
+            "codex",
+            "opencode"
         ],
         "desktop": [
             "brave-browser",
             "librewolf",
-            "duckduckgo",
+            "zen",
             "discord",
-            "thunderbird"
+            "proton-mail",
+            "signal",
+            "telegram"
         ],
         "nextcloud": [
             "nextcloud",

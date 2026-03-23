@@ -1,0 +1,16 @@
+{
+  "name": "playstation-dark-theme",
+  "displayName": "PlayStation Dark",
+  "version": "1.0.0",
+  "engines": { "vscode": "^1.60.0" },
+  "categories": ["Themes"],
+  "contributes": {
+    "themes": [
+      {
+        "label": "PlayStation Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/playstation-dark-theme.json"
+      }
+    ]
+  }
+}

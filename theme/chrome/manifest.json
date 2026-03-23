@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "version": "1.0",
+  "name": "Everforest Nord Blend",
+  "description": "Everforest Dark Hard backgrounds with Nord Frost accents",
+  "theme": {
+    "colors": {
+      "frame":                          [30, 35, 38],
+      "frame_inactive":                 [30, 35, 38],
+      "frame_incognito":                [30, 35, 38],
+      "frame_incognito_inactive":       [30, 35, 38],
+      "toolbar":                        [39, 46, 51],
+      "tab_text":                       [211, 198, 170],
+      "tab_background_text_inactive":   [122, 132, 120],
+      "bookmark_text":                  [211, 198, 170],
+      "ntp_background":                 [30, 35, 38],
+      "ntp_text":                       [211, 198, 170],
+      "ntp_link":                       [136, 192, 208],
+      "omnibox_background":             [45, 59, 65],
+      "omnibox_text":                   [211, 198, 170],
+      "toolbar_button_icon":            [129, 161, 193],
+      "toolbar_text":                   [211, 198, 170]
+    },
+    "tints": {
+      "buttons":                        [0.58, 0.38, 0.63],
+      "frame_incognito":                [-1, 0.2, -1]
+    },
+    "properties": {
+      "ntp_logo_alternate": 1
+    }
+  }
+}

@@ -64,10 +64,10 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     # VS Code theme (VS Code, VSCodium)
     for ext_dir in "$HOME/.vscode/extensions" "$HOME/.vscode-oss/extensions"; do
         editor_name=$(basename "$(dirname "$ext_dir")")
-        theme_ext="$ext_dir/everforest-nord-theme"
+        theme_ext="$ext_dir/everforest-nord-theme-1.0.0"
         mkdir -p "$theme_ext/themes"
-        ln -sf "$dir/theme/vscode/everforest-nord-blend/package.json" "$theme_ext/package.json"
-        ln -sf "$dir/theme/vscode/everforest-nord-blend/themes/everforest-nord-theme.json" "$theme_ext/themes/everforest-nord-theme.json"
+        ln -sf "$dir/theme/vscode/everforest-nord-blend-1.0.0/package.json" "$theme_ext/package.json"
+        ln -sf "$dir/theme/vscode/everforest-nord-blend-1.0.0/themes/everforest-nord-theme.json" "$theme_ext/themes/everforest-nord-theme.json"
         echo "Installed Everforest Nord theme for $editor_name"
     done
 

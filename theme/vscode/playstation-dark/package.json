@@ -1,7 +1,9 @@
 {
   "name": "playstation-dark-theme",
   "displayName": "PlayStation Dark",
+  "description": "A dark theme inspired by PlayStation design aesthetics",
   "version": "1.0.0",
+  "publisher": "local",
   "engines": { "vscode": "^1.60.0" },
   "categories": ["Themes"],
   "contributes": {

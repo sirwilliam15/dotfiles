@@ -1,7 +1,9 @@
 {
   "name": "everforest-nord-theme",
   "displayName": "Everforest Nord Blend",
+  "description": "A custom dark theme blending Everforest and Nord color palettes",
   "version": "1.0.0",
+  "publisher": "local",
   "engines": { "vscode": "^1.60.0" },
   "categories": ["Themes"],
   "contributes": {

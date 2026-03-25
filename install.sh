@@ -40,36 +40,60 @@ link_config() {
     fi
 }
 
+# Detect platform
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    # Symlink config files
-    link_config "$dir/macos/.skhdrc" "$HOME/.skhdrc"
+    platform="macos"
+elif [[ "$OSTYPE" == "linux"* ]]; then
+    platform="linux"
+else
+    echo "Unsupported OS: $OSTYPE"
+    exit 1
+fi
 
-    # Starship prompt config
-    mkdir -p "$HOME/.config"
-    link_config "$dir/theme/starship.toml" "$HOME/.config/starship.toml"
+# --- Shared setup ---
 
-    # Ghostty terminal config
-    mkdir -p "$HOME/.config/ghostty"
-    link_config "$dir/ghostty" "$HOME/.config/ghostty/config"
+# Starship prompt config
+mkdir -p "$HOME/.config"
+link_config "$dir/theme/starship.toml" "$HOME/.config/starship.toml"
 
-    # Append bashrc source (only if not already present)
-    if ! grep -qF 'source "$DOTFILES/macos/.bashrc"' "$HOME/.bashrc" 2>/dev/null; then
-        echo "Adding source to $HOME/.bashrc"
-        echo "export DOTFILES=$dir" >> "$HOME/.bashrc"
-        echo 'source "$DOTFILES/macos/.bashrc"' >> "$HOME/.bashrc"
-    else
-        echo ".bashrc already configured, skipping"
+# Ghostty terminal config
+mkdir -p "$HOME/.config/ghostty"
+link_config "$dir/ghostty" "$HOME/.config/ghostty/config"
+
+# Bashrc — append source line (only if not already present)
+bashrc_source="source \"\$DOTFILES/$platform/.bashrc\""
+if ! grep -qF "$bashrc_source" "$HOME/.bashrc" 2>/dev/null; then
+    echo "Adding source to $HOME/.bashrc"
+    echo "export DOTFILES=$dir" >> "$HOME/.bashrc"
+    echo "$bashrc_source" >> "$HOME/.bashrc"
+else
+    echo ".bashrc already configured, skipping"
+fi
+
+# VS Code theme (VS Code, VSCodium)
+for ext_dir in "$HOME/.vscode/extensions" "$HOME/.vscode-oss/extensions"; do
+    editor_name=$(basename "$(dirname "$ext_dir")")
+    theme_ext="$ext_dir/everforest-nord-theme-1.0.0"
+    mkdir -p "$theme_ext/themes"
+    ln -sf "$dir/theme/vscode/everforest-nord-blend/package.json" "$theme_ext/package.json"
+    ln -sf "$dir/theme/vscode/everforest-nord-blend/themes/everforest-nord-theme.json" "$theme_ext/themes/everforest-nord-theme.json"
+
+    # Register in extensions.json so the editor discovers the theme
+    ext_json="$ext_dir/extensions.json"
+    if [ -f "$ext_json" ] && command -v jq > /dev/null 2>&1; then
+        if ! jq -e '.[] | select(.identifier.id == "local.everforest-nord-theme")' "$ext_json" > /dev/null 2>&1; then
+            jq '. += [{"identifier":{"id":"local.everforest-nord-theme"},"version":"1.0.0","location":{"$mid":1,"path":"'"$theme_ext"'","scheme":"file"},"relativeLocation":"everforest-nord-theme-1.0.0","metadata":{"installedTimestamp":'$(date +%s000)',"pinned":false,"source":"gallery","targetPlatform":"universal","updated":false,"private":false,"isPreReleaseVersion":false,"hasPreReleaseVersion":false}}]' "$ext_json" > "$ext_json.tmp" && mv "$ext_json.tmp" "$ext_json"
+            echo "Registered Everforest Nord theme in $editor_name extensions.json"
+        fi
     fi
 
-    # VS Code theme (VS Code, VSCodium)
-    for ext_dir in "$HOME/.vscode/extensions" "$HOME/.vscode-oss/extensions"; do
-        editor_name=$(basename "$(dirname "$ext_dir")")
-        theme_ext="$ext_dir/everforest-nord-theme-1.0.0"
-        mkdir -p "$theme_ext/themes"
-        ln -sf "$dir/theme/vscode/everforest-nord-blend-1.0.0/package.json" "$theme_ext/package.json"
-        ln -sf "$dir/theme/vscode/everforest-nord-blend-1.0.0/themes/everforest-nord-theme.json" "$theme_ext/themes/everforest-nord-theme.json"
-        echo "Installed Everforest Nord theme for $editor_name"
-    done
+    echo "Installed Everforest Nord theme for $editor_name"
+done
+
+# --- macOS-specific setup ---
+
+if [[ "$platform" == "macos" ]]; then
+    link_config "$dir/macos/.skhdrc" "$HOME/.skhdrc"
 
     # Yabai mode selection
     echo "Install yabai mode? [minimal/full/skip]"

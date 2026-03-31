@@ -93,13 +93,9 @@ if [ "$(uname -s)" = "Darwin" ]; then
     printf '\n  Enable SSH server (Remote Login)? (y/n) '
     read -r setup_sshd
     if [ "$setup_sshd" = "y" ]; then
-        if sudo systemsetup -getremotelogin 2>/dev/null | grep -q "On"; then
-            ok "Remote Login already enabled"
-        else
-            info "Enabling Remote Login (requires sudo) …"
-            sudo systemsetup -setremotelogin on
-            ok "Remote Login enabled"
-        fi
+        info "Opening System Settings > Remote Login …"
+        open "x-apple.systempreferences:com.apple.preferences.sharing?Services_RemoteLogin"
+        ok "Enable Remote Login in the Settings window, then continue"
     else
         info "Skipping SSH server setup"
     fi

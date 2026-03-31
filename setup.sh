@@ -13,6 +13,17 @@ info() { printf '  [ .. ] %s\n' "$1"; }
 ok()   { printf '  [ OK ] %s\n' "$1"; }
 fail() { printf '  [FAIL] %s\n' "$1"; exit 1; }
 
+# When piped via curl|sh, stdin is the pipe — not the terminal.
+# Reopen stdin from /dev/tty so sudo, brew, and other interactive
+# commands can prompt the user for input.
+if [ ! -t 0 ]; then
+    if [ -e /dev/tty ]; then
+        exec </dev/tty
+    else
+        fail "No TTY available — download and run this script directly instead of piping"
+    fi
+fi
+
 # --- macOS ---
 if [ "$(uname -s)" = "Darwin" ]; then
 

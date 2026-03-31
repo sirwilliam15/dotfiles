@@ -70,6 +70,16 @@ else
     echo ".bashrc already configured, skipping"
 fi
 
+# macOS login shells read .bash_profile, not .bashrc — ensure it sources .bashrc
+if [[ "$platform" == "macos" ]]; then
+    if ! grep -qF 'source "$HOME/.bashrc"' "$HOME/.bash_profile" 2>/dev/null; then
+        echo "Adding .bashrc source to $HOME/.bash_profile"
+        echo '[ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"' >> "$HOME/.bash_profile"
+    else
+        echo ".bash_profile already sources .bashrc, skipping"
+    fi
+fi
+
 # VS Code theme (VS Code, VSCodium)
 for ext_dir in "$HOME/.vscode/extensions" "$HOME/.vscode-oss/extensions"; do
     editor_name=$(basename "$(dirname "$ext_dir")")

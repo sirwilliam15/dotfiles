@@ -14,8 +14,18 @@ See [macos/README.md](macos/README.md) and [linux/README.md](linux/README.md) fo
 
 ## Setup
 
+### Quick start (new machine)
+
 ```bash
-git clone <repo> ~/.dotfiles
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/sirwilliam15/dotfiles/HEAD/setup.sh)"
+```
+
+This installs Xcode CLI tools, Homebrew, git, and bash, then clones the repo to `~/.dotfiles`.
+
+### Manual
+
+```bash
+git clone https://github.com/sirwilliam15/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 ./install.sh
 ```

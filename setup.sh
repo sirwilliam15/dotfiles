@@ -1,8 +1,11 @@
 #!/bin/sh
 # Bootstrap script for dotfiles
-# Usage: curl -fsSL https://raw.githubusercontent.com/sirwilliam15/dotfiles/HEAD/setup.sh | sh
+# Usage: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/sirwilliam15/dotfiles/HEAD/setup.sh)"
 #
 # Installs prerequisites and clones the dotfiles repo.
+#
+# NOTE: Use the bash -c "$(curl ...)" pattern above, NOT curl|sh.
+# The script needs interactive stdin for sudo and Homebrew prompts.
 
 set -e
 
@@ -13,15 +16,9 @@ info() { printf '  [ .. ] %s\n' "$1"; }
 ok()   { printf '  [ OK ] %s\n' "$1"; }
 fail() { printf '  [FAIL] %s\n' "$1"; exit 1; }
 
-# When piped via curl|sh, stdin is the pipe — not the terminal.
-# Reopen stdin from /dev/tty so sudo, brew, and other interactive
-# commands can prompt the user for input.
+# Bail early if stdin isn't a terminal — the script needs interactive input
 if [ ! -t 0 ]; then
-    if [ -e /dev/tty ]; then
-        exec </dev/tty
-    else
-        fail "No TTY available — download and run this script directly instead of piping"
-    fi
+    fail "Not running interactively. Use: /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/sirwilliam15/dotfiles/HEAD/setup.sh)\""
 fi
 
 # --- macOS ---

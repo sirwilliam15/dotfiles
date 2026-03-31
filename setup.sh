@@ -89,6 +89,21 @@ if [ "$(uname -s)" = "Darwin" ]; then
         fi
     fi
 
+    # SSH server (Remote Login)
+    printf '\n  Enable SSH server (Remote Login)? (y/n) '
+    read -r setup_sshd
+    if [ "$setup_sshd" = "y" ]; then
+        if sudo systemsetup -getremotelogin 2>/dev/null | grep -q "On"; then
+            ok "Remote Login already enabled"
+        else
+            info "Enabling Remote Login (requires sudo) …"
+            sudo systemsetup -setremotelogin on
+            ok "Remote Login enabled"
+        fi
+    else
+        info "Skipping SSH server setup"
+    fi
+
 # --- Linux ---
 elif [ "$(uname -s)" = "Linux" ]; then
 

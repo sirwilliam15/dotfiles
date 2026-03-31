@@ -3,6 +3,7 @@
 
 format = """
 [╭─](bold green)\
+$hostname\
 $directory\
 $git_branch\
 $git_status\
@@ -25,6 +26,11 @@ style = "bold #e67e80"          # Everforest red
 [character]
 success_symbol = "[❯](bold #a7c080)"   # Everforest green
 error_symbol = "[❯](bold #e67e80)"     # Everforest red
+
+[hostname]
+ssh_only = false
+style = "bold #8fbcbb"          # Nord Frost 1 (warm accent)
+format = "[$hostname]($style) "
 
 [cmd_duration]
 min_time = 500

@@ -80,25 +80,75 @@ if [[ "$platform" == "macos" ]]; then
     fi
 fi
 
-# VS Code theme (VS Code, VSCodium)
-for ext_dir in "$HOME/.vscode/extensions" "$HOME/.vscode-oss/extensions"; do
-    editor_name=$(basename "$(dirname "$ext_dir")")
-    theme_ext="$ext_dir/everforest-nord-theme-1.0.0"
-    mkdir -p "$theme_ext/themes"
-    ln -sf "$dir/theme/vscode/everforest-nord-blend/package.json" "$theme_ext/package.json"
-    ln -sf "$dir/theme/vscode/everforest-nord-blend/themes/everforest-nord-theme.json" "$theme_ext/themes/everforest-nord-theme.json"
+# VS Code themes (VS Code, VSCodium)
+theme_root="$dir/theme/vscode"
+if [ -d "$theme_root" ] && command -v jq > /dev/null 2>&1; then
+    for ext_dir in "$HOME/.vscode/extensions" "$HOME/.vscode-oss/extensions" "$HOME/.cursor/extensions"; do
+        editor_name=$(basename "$(dirname "$ext_dir")")
+        mkdir -p "$ext_dir"
 
-    # Register in extensions.json so the editor discovers the theme
-    ext_json="$ext_dir/extensions.json"
-    if [ -f "$ext_json" ] && command -v jq > /dev/null 2>&1; then
-        if ! jq -e '.[] | select(.identifier.id == "local.everforest-nord-theme")' "$ext_json" > /dev/null 2>&1; then
-            jq '. += [{"identifier":{"id":"local.everforest-nord-theme"},"version":"1.0.0","location":{"$mid":1,"path":"'"$theme_ext"'","scheme":"file"},"relativeLocation":"everforest-nord-theme-1.0.0","metadata":{"installedTimestamp":'$(date +%s000)',"pinned":false,"source":"gallery","targetPlatform":"universal","updated":false,"private":false,"isPreReleaseVersion":false,"hasPreReleaseVersion":false}}]' "$ext_json" > "$ext_json.tmp" && mv "$ext_json.tmp" "$ext_json"
-            echo "Registered Everforest Nord theme in $editor_name extensions.json"
-        fi
-    fi
+        for theme_dir in "$theme_root"/*; do
+            if [ ! -d "$theme_dir" ] || [ ! -f "$theme_dir/package.json" ] || [ ! -d "$theme_dir/themes" ]; then
+                continue
+            fi
 
-    echo "Installed Everforest Nord theme for $editor_name"
-done
+            theme_name=$(jq -r '.name' "$theme_dir/package.json")
+            theme_version=$(jq -r '.version' "$theme_dir/package.json")
+            theme_publisher=$(jq -r '.publisher' "$theme_dir/package.json")
+            theme_display_name=$(jq -r '.displayName' "$theme_dir/package.json")
+
+            if [ -z "$theme_name" ] || [ "$theme_name" = "null" ] || [ -z "$theme_version" ] || [ "$theme_version" = "null" ]; then
+                echo "Skipping invalid VS Code theme manifest in $theme_dir"
+                continue
+            fi
+
+            theme_ext="$ext_dir/$theme_name-$theme_version"
+            mkdir -p "$theme_ext/themes"
+            ln -sfn "$theme_dir/package.json" "$theme_ext/package.json"
+
+            for theme_file in "$theme_dir/themes"/*; do
+                if [ -f "$theme_file" ]; then
+                    ln -sfn "$theme_file" "$theme_ext/themes/$(basename "$theme_file")"
+                fi
+            done
+
+            # Register in extensions.json so the editor discovers the theme.
+            ext_json="$ext_dir/extensions.json"
+            if [ -f "$ext_json" ] && [ -n "$theme_publisher" ] && [ "$theme_publisher" != "null" ]; then
+                theme_id="$theme_publisher.$theme_name"
+                if ! jq -e --arg theme_id "$theme_id" '.[] | select(.identifier.id == $theme_id)' "$ext_json" > /dev/null 2>&1; then
+                    jq \
+                        --arg theme_id "$theme_id" \
+                        --arg theme_version "$theme_version" \
+                        --arg theme_ext "$theme_ext" \
+                        --arg relative_location "$theme_name-$theme_version" \
+                        --argjson installed_timestamp "$(date +%s000)" \
+                        '. += [{
+                            "identifier": { "id": $theme_id },
+                            "version": $theme_version,
+                            "location": { "$mid": 1, "path": $theme_ext, "scheme": "file" },
+                            "relativeLocation": $relative_location,
+                            "metadata": {
+                                "installedTimestamp": $installed_timestamp,
+                                "pinned": false,
+                                "source": "gallery",
+                                "targetPlatform": "universal",
+                                "updated": false,
+                                "private": false,
+                                "isPreReleaseVersion": false,
+                                "hasPreReleaseVersion": false
+                            }
+                        }]' "$ext_json" > "$ext_json.tmp" && mv "$ext_json.tmp" "$ext_json"
+                    echo "Registered $theme_display_name in $editor_name extensions.json"
+                fi
+            fi
+
+            echo "Installed $theme_display_name for $editor_name"
+        done
+    done
+elif [ -d "$theme_root" ]; then
+    echo "Skipping VS Code theme installation because jq is not available"
+fi
 
 # --- macOS-specific setup ---
 

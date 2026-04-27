@@ -6,7 +6,15 @@ if [[ -f "$HOME/.env" ]]; then
     set +a  # stop automatically exporting
 fi
 
+# Fall back to a known-good TERM over SSH when the server lacks the client's terminfo
+# (e.g. SSH-ing from Ghostty into a stock Ubuntu Server, which has no xterm-ghostty entry)
+if [ -n "$SSH_CONNECTION" ] && ! infocmp "$TERM" >/dev/null 2>&1; then
+    export TERM=xterm-256color
+fi
+
+if command -v starship >/dev/null 2>&1; then
 eval "$(starship init bash)"
+fi
 
 # ls colors
 export CLICOLOR=1

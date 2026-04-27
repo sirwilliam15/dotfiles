@@ -64,7 +64,7 @@ link_config "$dir/ghostty" "$HOME/.config/ghostty/config"
 bashrc_source="source \"\$DOTFILES/$platform/.bashrc\""
 if ! grep -qF "$bashrc_source" "$HOME/.bashrc" 2>/dev/null; then
     echo "Adding source to $HOME/.bashrc"
-    echo "export DOTFILES=$dir" >> "$HOME/.bashrc"
+    echo "export DOTFILES=\"$dir\"" >> "$HOME/.bashrc"
     echo "$bashrc_source" >> "$HOME/.bashrc"
 else
     echo ".bashrc already configured, skipping"

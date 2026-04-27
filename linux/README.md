@@ -19,6 +19,47 @@ Linux desktop configuration using Hyprland on Wayland, targeting CachyOS (deskto
 
 ---
 
+## Shell Setup (all installs)
+
+The repo's `install.sh` symlinks `starship.toml` and wires `rc_common.sh` into `~/.bashrc`, but it does **not** install `starship` itself. Install it once on any new machine — desktop or server — before opening a new shell.
+
+### Install starship
+
+**Ubuntu / Debian (server or desktop):**
+```bash
+curl -sS https://starship.rs/install.sh | sh
+```
+
+**Fedora:**
+```bash
+sudo dnf install -y starship
+# or, if not in repos: curl -sS https://starship.rs/install.sh | sh
+```
+
+**Arch / CachyOS:**
+```bash
+sudo pacman -S starship
+```
+
+`rc_common.sh` guards the `starship init` call, so a missing binary is silent — but the prompt won't render until starship is installed.
+
+### SSH from Ghostty into a server
+
+Ghostty sets `TERM=xterm-ghostty`, which Ubuntu Server (and most stock distros) doesn't ship terminfo for. Without a fix, `clear`, `less`, `tmux`, and full-screen TUIs misbehave over SSH.
+
+`rc_common.sh` falls back to `xterm-256color` automatically when `$SSH_CONNECTION` is set and the current `TERM` has no terminfo entry. That's the safe default.
+
+To get full Ghostty fidelity (true colors, undercurl, etc.) on the server, install Ghostty's terminfo entry there once, from your **local** machine:
+
+```bash
+# from the local Ghostty client:
+infocmp -x xterm-ghostty | ssh user@server -- tic -x -
+```
+
+After that, the fallback in `rc_common.sh` becomes a no-op for that host and `xterm-ghostty` works natively.
+
+---
+
 ## Window Manager: Hyprland
 
 - **Display protocol:** Wayland (XWayland enabled for legacy X11 apps)

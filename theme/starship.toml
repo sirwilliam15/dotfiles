@@ -5,6 +5,8 @@ format = """
 [╭─](bold green)\
 $hostname\
 $directory\
+$python\
+$nix_shell\
 $git_branch\
 $git_status\
 $cmd_duration\
@@ -28,10 +30,22 @@ success_symbol = "[❯](bold #a7c080)"   # Everforest green
 error_symbol = "[❯](bold #e67e80)"     # Everforest red
 
 [hostname]
-ssh_only = false
+ssh_only = true
 style = "bold #8fbcbb"          # Nord Frost 1 (warm accent)
 format = "[$hostname]($style) "
 
 [cmd_duration]
 min_time = 500
 style = "bold #dbbc7f"          # Everforest yellow
+
+[python]
+detect_env_vars = ["VIRTUAL_ENV"]
+detect_extensions = []
+detect_files = []
+detect_folders = []
+format = '[p](bold #3776ab)[y](bold #ffd43b)[:${virtualenv}]($style) '
+style = "bold #7fbbb3"
+
+[nix_shell]
+format = '[nix:$name]($style) '
+style = "bold #83c092"

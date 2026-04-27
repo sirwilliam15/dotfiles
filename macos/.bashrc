@@ -8,4 +8,5 @@ alias grep="/opt/homebrew/bin/ggrep"
 alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 alias duh='du -h -d 1'
 
+source /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
 source "$DOTFILES/rc_common.sh"

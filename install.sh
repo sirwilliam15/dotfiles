@@ -1,3 +1,4 @@
+set -euo pipefail
 
 dir=$(pwd)
 mkdir -p "$dir/backup"
@@ -84,6 +85,7 @@ fi
 theme_root="$dir/theme/vscode"
 if [ -d "$theme_root" ] && command -v jq > /dev/null 2>&1; then
     for ext_dir in "$HOME/.vscode/extensions" "$HOME/.vscode-oss/extensions" "$HOME/.cursor/extensions"; do
+        [ -d "$(dirname "$ext_dir")" ] || continue
         editor_name=$(basename "$(dirname "$ext_dir")")
         mkdir -p "$ext_dir"
 

@@ -12,6 +12,11 @@
         "label": "Everforest Nord Blend",
         "uiTheme": "vs-dark",
         "path": "./themes/everforest-nord-theme.json"
+      },
+      {
+        "label": "Nord Everforest Blend",
+        "uiTheme": "vs-dark",
+        "path": "./themes/nord-everforest-theme.json"
       }
     ]
   }

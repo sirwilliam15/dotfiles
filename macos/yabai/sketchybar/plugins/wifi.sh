@@ -1,13 +1,19 @@
 #!/usr/bin/env sh
 
-SSID="$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | awk '/ SSID/ {print substr($0, index($0, $2))}')"
+WIFI_IFACE="$(networksetup -listallhardwareports 2>/dev/null \
+  | awk '/Hardware Port: Wi-Fi/{getline; print $2; exit}')"
+[ -z "$WIFI_IFACE" ] && WIFI_IFACE="en0"
 
-if [ -n "$SSID" ]; then
-  ICON="󰤨"
-  LABEL="$SSID"
-else
-  ICON="󰤭"
-  LABEL="N/A"
+POWER="$(networksetup -getairportpower "$WIFI_IFACE" 2>/dev/null | awk '{print $NF}')"
+
+if [ "$POWER" != "On" ]; then
+  sketchybar --set "$NAME" icon="󰖪" label="Offline"
+  exit 0
 fi
 
-sketchybar --set "$NAME" icon="$ICON" label="$LABEL"
+if ! ifconfig "$WIFI_IFACE" 2>/dev/null | grep -q 'status: active'; then
+  sketchybar --set "$NAME" icon="󰤫" label="Disconnected"
+  exit 0
+fi
+
+sketchybar --set "$NAME" icon="󰤨" label="Connected"

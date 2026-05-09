@@ -4,7 +4,7 @@
 
 [[ ":$PATH:" != *":/opt/homebrew/bin:"* ]] && export PATH="/opt/homebrew/bin:$PATH"
 
-alias grep="/opt/homebrew/bin/ggrep"
+alias grep="/opt/homebrew/bin/ggrep --color=auto"
 alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 alias duh='du -h -d 1'
 

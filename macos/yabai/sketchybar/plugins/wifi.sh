@@ -16,4 +16,5 @@ if ! ifconfig "$WIFI_IFACE" 2>/dev/null | grep -q 'status: active'; then
   exit 0
 fi
 
-sketchybar --set "$NAME" icon="󰤨" label="Connected"
+IP="$(ipconfig getifaddr "$WIFI_IFACE" 2>/dev/null)"
+sketchybar --set "$NAME" icon="󰤨" label="${IP:-Connected}"

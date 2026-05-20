@@ -34,6 +34,9 @@ sketchybar --default \
   icon.padding_left=6 \
   icon.padding_right=6
 
+# --- Custom events ---
+sketchybar --add event windows_on_spaces
+
 # --- Left: Spaces ---
 SPACE_ICONS=("1" "2" "3" "4" "5" "6" "7" "8")
 
@@ -47,14 +50,18 @@ for i in "${!SPACE_ICONS[@]}"; do
       icon.color=0xffd3c6aa \
       icon.highlight_color=0xff1e2326 \
       icon.padding_left=10 \
-      icon.padding_right=10 \
+      icon.padding_right=6 \
+      label.font="sketchybar-app-font:Regular:14.0" \
+      label.padding_left=2 \
+      label.padding_right=10 \
+      label.y_offset=-1 \
       background.color=0xff272e33 \
       background.drawing=off \
       background.height=22 \
       background.corner_radius=6 \
-      label.drawing=off \
       script="$PLUGIN_DIR/space.sh" \
-      click_script="yabai -m space --focus $sid"
+      click_script="yabai -m space --focus $sid" \
+    --subscribe space.$sid windows_on_spaces
 done
 
 # --- Left: Front app ---
@@ -68,17 +75,20 @@ sketchybar --add item front_app left \
     background.padding_left=8 \
     background.padding_right=8 \
     script="$PLUGIN_DIR/front_app.sh" \
+    click_script="open -a 'Mission Control'" \
   --subscribe front_app front_app_switched
 
-# --- Center: Clock ---
-sketchybar --add item clock center \
+# --- Right: Clock ---
+sketchybar --add item clock right \
   --set clock \
     update_freq=30 \
     icon="" \
     icon.color=0xff88c0d0 \
     label.color=0xffd3c6aa \
     background.drawing=on \
-    script="$PLUGIN_DIR/clock.sh"
+    script="$PLUGIN_DIR/clock.sh" \
+    click_script="$PLUGIN_DIR/clock.sh" \
+  --subscribe clock mouse.clicked
 
 # --- Right: Wifi ---
 sketchybar --add item wifi right \
@@ -87,8 +97,26 @@ sketchybar --add item wifi right \
     icon.color=0xff83c092 \
     background.drawing=on \
     script="$PLUGIN_DIR/wifi.sh" \
-    click_script="open /System/Library/PreferencePanes/Network.prefPane" \
+    click_script="osascript -e 'tell application \"System Events\" to tell process \"ControlCenter\" to click (first menu bar item of menu bar 1 whose description contains \"Fi\")'" \
   --subscribe wifi wifi_change
+
+# --- Right: VPN ---
+sketchybar --add item vpn right \
+  --set vpn \
+    update_freq=10 \
+    background.drawing=on \
+    script="$PLUGIN_DIR/vpn.sh" \
+    click_script="open -a 'Mullvad VPN'" \
+  --subscribe vpn system_woke
+
+# --- Right: Docker ---
+sketchybar --add item docker right \
+  --set docker \
+    update_freq=30 \
+    background.drawing=on \
+    script="$PLUGIN_DIR/docker.sh" \
+    click_script="open -a 'Docker'" \
+  --subscribe docker system_woke
 
 # --- Right: Volume ---
 sketchybar --add item volume right \
@@ -96,7 +124,7 @@ sketchybar --add item volume right \
     icon.color=0xffdbbc7f \
     background.drawing=on \
     script="$PLUGIN_DIR/volume.sh" \
-    click_script="open /System/Library/PreferencePanes/Sound.prefPane" \
+    click_script="osascript -e 'tell application \"System Events\" to tell process \"ControlCenter\" to click (first menu bar item of menu bar 1 whose description is \"Sound\")'" \
   --subscribe volume volume_change
 
 # --- Right: Battery ---
@@ -106,7 +134,7 @@ sketchybar --add item battery right \
     icon.color=0xffa7c080 \
     background.drawing=on \
     script="$PLUGIN_DIR/battery.sh" \
-    click_script="open /System/Library/PreferencePanes/Battery.prefPane" \
+    click_script="osascript -e 'tell application \"System Events\" to tell process \"ControlCenter\" to click (first menu bar item of menu bar 1 whose description is \"Battery\")'" \
   --subscribe battery system_woke power_source_change
 
 sketchybar --update

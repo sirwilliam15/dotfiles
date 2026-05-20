@@ -46,4 +46,21 @@ yabai -m rule --add app="^Font Book$" manage=off
 yabai -m rule --add title="^(Info|Preferences|Settings)$" manage=off
 yabai -m rule --add app="^Finder$" title="^(Copy|Connect|Move|Info|Pref)" manage=off
 
+# --- Sketchybar signals ---
+# Push window/app changes to sketchybar so per-space app icons stay in sync.
+# Idempotent: remove any prior signals we created (label prefix sb_) first.
+if command -v jq >/dev/null 2>&1; then
+  for label in $(yabai -m signal --list | jq -r '.[] | select(.label | startswith("sb_")) | .label'); do
+    yabai -m signal --remove "$label"
+  done
+fi
+
+for evt in window_created window_destroyed window_moved \
+           window_minimized window_deminimized window_title_changed \
+           application_launched application_terminated; do
+  yabai -m signal --add event="$evt" \
+    label="sb_${evt}" \
+    action="sketchybar --trigger windows_on_spaces &>/dev/null"
+done
+
 echo "yabai configuration loaded"

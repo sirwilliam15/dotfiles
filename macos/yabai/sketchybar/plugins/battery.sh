@@ -2,6 +2,7 @@
 
 PERCENTAGE="$(pmset -g batt | grep -Eo "\d+%" | cut -d% -f1)"
 CHARGING="$(pmset -g batt | grep 'AC Power')"
+LOWPOWER="$(pmset -g | awk '/lowpowermode/ {print $2}')"
 
 if [ -z "$PERCENTAGE" ]; then
   exit 0
@@ -15,8 +16,15 @@ case "${PERCENTAGE}" in
   *)           ICON="󰂃" ;;
 esac
 
+COLOR=0xffa7c080
+if [ "$PERCENTAGE" -lt 20 ] && [ -z "$CHARGING" ]; then
+  COLOR=0xffff5555
+elif [ "$LOWPOWER" = "1" ]; then
+  COLOR=0xffffcc00
+fi
+
 if [ -n "$CHARGING" ]; then
   ICON="󰂄"
 fi
 
-sketchybar --set "$NAME" icon="$ICON" label="${PERCENTAGE}%"
+sketchybar --set "$NAME" icon="$ICON" label="${PERCENTAGE}%" icon.color="$COLOR"

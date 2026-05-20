@@ -2,7 +2,7 @@ ctrl + shift - 1 : source ~/.bashrc && "$DOTFILES/scripts/spaces.sh" west
 ctrl + shift - 2 : source ~/.bashrc && "$DOTFILES/scripts/spaces.sh" north
 ctrl + shift - 3 : source ~/.bashrc && "$DOTFILES/scripts/spaces.sh" east
 ctrl + shift - 4 : source ~/.bashrc && "$DOTFILES/scripts/spaces.sh" priority
-# ctrl + shift - 5 : yabai -m window --grid 3:7:11:0:2:2
+ctrl + shift - 5 : yabai -m window --grid 1:1:1:0:1:1
 
 ctrl + shift - q : source ~/.bashrc && "$DOTFILES/scripts/spaces.sh" south
 ctrl + shift - w : source ~/.bashrc && "$DOTFILES/scripts/spaces.sh" northwest

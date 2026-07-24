@@ -12,8 +12,9 @@ if [ -n "$SSH_CONNECTION" ] && ! infocmp "$TERM" >/dev/null 2>&1; then
     export TERM=xterm-256color
 fi
 
-if command -v starship >/dev/null 2>&1; then
-eval "$(starship init bash)"
+if command -v starship >/dev/null 2>&1 &&
+   ! declare -F starship_precmd >/dev/null; then
+    eval "$(starship init bash)"
 fi
 
 # ls colors

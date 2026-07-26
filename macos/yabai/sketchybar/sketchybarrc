@@ -78,6 +78,15 @@ sketchybar --add item front_app left \
     click_script="open -a 'Mission Control'" \
   --subscribe front_app front_app_switched
 
+# --- Left: Docker ---
+sketchybar --add item docker left \
+  --set docker \
+    update_freq=30 \
+    background.drawing=on \
+    script="$PLUGIN_DIR/docker.sh" \
+    click_script="open -a 'Docker'" \
+  --subscribe docker system_woke
+
 # --- Right: Clock ---
 sketchybar --add item clock right \
   --set clock \
@@ -109,15 +118,6 @@ sketchybar --add item vpn right \
     click_script="open -a 'Mullvad VPN'" \
   --subscribe vpn system_woke
 
-# --- Right: Docker ---
-sketchybar --add item docker right \
-  --set docker \
-    update_freq=30 \
-    background.drawing=on \
-    script="$PLUGIN_DIR/docker.sh" \
-    click_script="open -a 'Docker'" \
-  --subscribe docker system_woke
-
 # --- Right: Volume ---
 sketchybar --add item volume right \
   --set volume \
@@ -136,6 +136,13 @@ sketchybar --add item battery right \
     script="$PLUGIN_DIR/battery.sh" \
     click_script="osascript -e 'tell application \"System Events\" to tell process \"ControlCenter\" to click (first menu bar item of menu bar 1 whose description is \"Battery\")'" \
   --subscribe battery system_woke power_source_change
+
+# --- Wake handler (hidden) ---
+sketchybar --add item wake_handler left \
+  --set wake_handler \
+    drawing=off \
+    script="$PLUGIN_DIR/wake.sh" \
+  --subscribe wake_handler system_woke
 
 sketchybar --update
 echo "sketchybar configuration loaded"

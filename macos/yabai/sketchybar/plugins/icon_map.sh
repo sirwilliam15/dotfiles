@@ -861,8 +861,8 @@ function __icon_map() {
    "Microsoft Remote Desktop")
         icon_result=":microsoft_remote_desktop:"
         ;;
-   "Microsoft Teams" | "Microsoft Teams (work or school)")
-        icon_result=":microsoft_teams:"
+   "Microsoft Teams" | "Microsoft Teams (work or school)" | "MSTeams")
+        icon_result=":teams:"
         ;;
    "Microsoft Word")
         icon_result=":microsoft_word:"

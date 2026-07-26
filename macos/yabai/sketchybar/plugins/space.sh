@@ -8,7 +8,7 @@ SID="${NAME#space.}"
 ICONS=""
 if command -v yabai >/dev/null 2>&1; then
   ICONS="$(yabai -m query --windows --space "$SID" 2>/dev/null \
-    | jq -r '[.[] | select(."is-minimized"==false) | .app] | unique | .[]' \
+    | jq -r '[.[] | select(."is-minimized"==false) | select(.app != "Finder") | .app] | unique | .[]' \
     | while IFS= read -r app; do
         [ -z "$app" ] && continue
         __icon_map "$app"

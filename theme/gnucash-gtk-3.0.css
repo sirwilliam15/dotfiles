@@ -1,0 +1,492 @@
+/* Everforest Dark — GnuCash Theme
+ *
+ * GnuCash 3.x+ is a GTK3 app and themes via a user CSS file named gtk-3.0.css.
+ *
+ * Install — GnuCash reads gtk-3.0.css from gnc_userconfig_dir() (NOT a
+ * `config/` subfolder; on macOS/Windows config == the data dir). Place it at:
+ *        macOS   ~/Library/Application Support/GnuCash/gtk-3.0.css
+ *        Linux   ~/.config/gnucash/gtk-3.0.css
+ *        Windows %APPDATA%\GnuCash\gtk-3.0.css
+ *
+ *   Then, in GnuCash Preferences → Register (the "Graphics" section on macOS),
+ *   UNCHECK "Use GnuCash built-in color theme". That switches the register from
+ *   the `.gnc-class-register-*` classes to the `.gnc-class-user-register-*`
+ *   classes defined below. Fully quit (Cmd-Q) and relaunch — the CSS is only
+ *   read at startup.
+ *
+ * Palette: Everforest Dark Hard (see theme/ref/everforest-dark.md).
+ *   bg #1e2326  surface #272e33  overlay #2d3b41  disabled #232a2e
+ *   text #d3c6aa  muted #7a8478
+ *   green #a7c080  teal #83c092  blue #7fbbb3  yellow #dbbc7f
+ *   orange #e69875  red #e67e80  purple #d699b6
+ */
+
+/* ── Application-wide font ── */
+* {
+  font-family: "Geist Mono", monospace;
+}
+
+/* ── Scrollbars ── */
+scrollbar slider {
+  min-width: 8px;
+  min-height: 8px;
+  border-radius: 8px;
+  background-color: rgba(122, 132, 120, 0.38);
+}
+scrollbar slider:hover {
+  background-color: #7a8478;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * General application chrome (whole-app Everforest, not just register).
+ * These target stock GTK nodes so the account tree, tabs, menus and
+ * dialogs match too. Register-specific rules further below are more
+ * specific and still win where they overlap.
+ * ═══════════════════════════════════════════════════════════════════ */
+
+/* Base window + scroll surfaces. NOTE: do NOT force a color on generic `box`
+ * or `grid` — buttons/toolbuttons contain boxes, and painting them would show
+ * a darker inset rectangle inside every button (visible as a "border" on
+ * hover). Containers stay transparent and inherit whatever is behind them. */
+window,
+.background,
+paned,
+scrolledwindow,
+viewport,
+stack {
+  background-color: #1e2326;
+  color: #d3c6aa;
+}
+
+/* Belt-and-suspenders: any box inside an interactive widget is transparent. */
+button box,
+toolbar box,
+toolbutton box,
+entry box,
+combobox box,
+menuitem box,
+notebook > header box {
+  background-color: transparent;
+}
+
+/* Flatten theme gradients + shadows. CRITICAL: background-color paints UNDER
+ * background-image, so the macOS GTK theme's light gradient images on bars,
+ * buttons, tabs and dialogs would otherwise cover our colors entirely. */
+button,
+entry,
+spinbutton,
+combobox,
+combobox button,
+notebook,
+notebook > header,
+notebook > header > tabs > tab,
+menubar,
+menubar > menuitem,
+menu,
+menuitem,
+toolbar,
+statusbar,
+headerbar,
+dialog,
+messagedialog,
+.dialog-action-box,
+.dialog-action-box button,
+#gnc-id-summarybar,
+#gnc-id-summarybar * {
+  background-image: none;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+/* Dialogs (e.g. the file-lock prompt) — body + action button bar */
+dialog,
+messagedialog,
+messagedialog.background,
+dialog .dialog-vbox,
+dialog .dialog-action-box,
+.dialog-action-box,
+.dialog-action-area {
+  background-color: #1e2326;
+  color: #d3c6aa;
+}
+
+/* Notebook tab bar */
+notebook > header {
+  background-color: #272e33;
+  border-color: #2d3b41;
+}
+notebook > header > tabs > tab {
+  background-color: #272e33;
+  color: #7a8478;
+  border-color: #2d3b41;
+}
+notebook > header > tabs > tab:checked {
+  background-color: #1e2326;
+  color: #a7c080;
+}
+notebook > header > tabs > tab:hover {
+  color: #d3c6aa;
+}
+
+/* Menubar + menus */
+menubar,
+menubar > menuitem {
+  background-color: #272e33;
+  color: #d3c6aa;
+}
+menu,
+.menu,
+menu menuitem,
+popover.background {
+  background-color: #272e33;
+  color: #d3c6aa;
+}
+menubar > menuitem:hover,
+menu menuitem:hover {
+  background-color: #2d3b41;
+  color: #d3c6aa;
+}
+menuitem:disabled {
+  color: #7a8478;
+}
+
+/* Tree/list views — the account tree, report lists, etc. */
+treeview.view {
+  background-color: #1e2326;
+  color: #d3c6aa;
+}
+treeview.view:selected,
+treeview.view:selected:focus {
+  background-color: #a7c080;
+  color: #1e2326;
+}
+/* Column header buttons */
+treeview.view header button,
+columnview header button,
+.view header button {
+  background-color: #272e33;
+  color: #d3c6aa;
+  border-color: #2d3b41;
+}
+
+/* Toolbar icon labels (keep readable on the dark toolbar) */
+toolbar label {
+  color: #d3c6aa;
+}
+toolbar button:disabled label,
+toolbar toolbutton:disabled label {
+  color: #7a8478;
+}
+
+/* Toolbar + tab buttons: fully flat so icons sit directly on the dark bar
+ * (the fill was living on the toolbutton WRAPPER, not the inner button, so it
+ * must be cleared on every toolbar node). Highlight only on hover. Dialog
+ * buttons keep their border further below. */
+toolbar,
+toolbar toolbutton,
+toolbar toolbutton button,
+toolbar button,
+notebook > header > tabs > tab button {
+  background-color: transparent;
+  background-image: none;
+  border: none;
+  box-shadow: none;
+}
+toolbar {
+  background-color: #272e33;
+}
+toolbar toolbutton button:hover,
+toolbar button:hover,
+notebook > header > tabs > tab button:hover {
+  background-color: #2d3b41;
+  border-radius: 5px;
+}
+toolbar toolbutton button:disabled {
+  background-color: transparent;
+}
+
+/* Text entries, spin buttons, combos */
+entry,
+spinbutton,
+combobox button,
+combobox entry {
+  background-color: #272e33;
+  color: #d3c6aa;
+  border-color: #4c555b;
+  caret-color: #a7c080;
+}
+entry:focus {
+  border-color: #a7c080;
+}
+entry selection,
+.view:selected {
+  background-color: #2d3b41;
+  color: #d3c6aa;
+}
+
+/* Buttons */
+button {
+  background-color: #272e33;
+  color: #d3c6aa;
+  border: 1px solid #4c555b;
+  border-radius: 5px;
+}
+button:hover {
+  background-color: #2d3b41;
+  border-color: #7a8478;
+}
+button:disabled {
+  color: #7a8478;
+}
+button:checked,
+button:active {
+  background-color: #2d3b41;
+  color: #a7c080;
+}
+
+/* Frames, separators, headers */
+frame > border,
+separator {
+  background-color: #2d3b41;
+  border-color: #2d3b41;
+}
+
+/* Check/radio boxes */
+check,
+radio {
+  background-color: #272e33;
+  border: 1px solid #4c555b;
+  color: #d3c6aa;
+}
+check:checked,
+radio:checked,
+checkbutton check:checked,
+radiobutton radio:checked {
+  background-color: #a7c080;
+  border-color: #a7c080;
+  color: #1e2326;
+}
+
+/* ── File chooser ── */
+filechooser,
+filechooser .dialog-vbox,
+placessidebar,
+placessidebar list,
+placessidebar viewport {
+  background-color: #1e2326;
+  color: #d3c6aa;
+}
+placessidebar row:hover {
+  background-color: #272e33;
+}
+placessidebar row:selected {
+  background-color: #2d3b41;
+  color: #a7c080;
+}
+/* Breadcrumb path bar — flat, subtle, green for the current folder */
+.path-bar button,
+pathbar button {
+  background-color: #272e33;
+  border: 1px solid #2d3b41;
+}
+.path-bar button:checked,
+pathbar button:checked {
+  background-color: #2d3b41;
+  color: #a7c080;
+}
+.path-bar button:hover,
+pathbar button:hover {
+  background-color: #2d3b41;
+}
+
+/* Tooltips */
+tooltip,
+tooltip.background {
+  background-color: #2d3b41;
+  color: #d3c6aa;
+}
+
+/* ── Register: fonts ── */
+gnc-id-sheet {
+  font-family: "Geist Mono", monospace;
+  font-size: 11px;
+  color: #d3c6aa;
+}
+
+gnc-id-header {
+  background-color: #272e33;
+  color: #a7c080;
+}
+
+/* Register cursor (currently edited row) */
+gnc-id-cursor {
+  background-color: #2d3b41;
+  color: #d3c6aa;
+}
+gnc-id-cursor button {
+  border-width: 1px;
+  border-color: #a7c080;
+}
+/* The active cell's edit entry */
+cursor entry {
+  background-color: #2d3b41;
+  color: #d3c6aa;
+  caret-color: #a7c080;
+}
+
+/* Register sheet calendar (date picker inside a cell) */
+gnc-id-sheet calendar {
+  font-family: "Geist Mono", monospace;
+  font-size: 13px;
+  background-color: #272e33;
+  color: #d3c6aa;
+  border-color: #543a48;
+  border-width: 1px;
+}
+
+/* ── Register: user colors (active when built-in colors are disabled) ── */
+.gnc-class-user-register-header {
+  background-color: #272e33;
+  color: #a7c080;
+}
+
+/* Primary transaction rows */
+.gnc-class-user-register-primary {
+  background-color: #1e2326;
+  color: #d3c6aa;
+}
+.gnc-class-user-register-primary:disabled {
+  background-color: #232a2e;
+  color: #7a8478;
+}
+
+/* Alternate transaction rows (zebra striping) */
+.gnc-class-user-register-secondary {
+  background-color: #272e33;
+  color: #d3c6aa;
+}
+.gnc-class-user-register-secondary:disabled {
+  background-color: #232a2e;
+  color: #7a8478;
+}
+
+/* Split lines */
+.gnc-class-user-register-split {
+  background-color: #2d3b41;
+  color: #d3c6aa;
+}
+.gnc-class-user-register-split:disabled {
+  background-color: #232a2e;
+  color: #7a8478;
+}
+
+/* Selected / current row */
+.gnc-class-user-register-cursor {
+  background-color: #2d3b41;
+  color: #d3c6aa;
+  border-radius: 0px;
+}
+
+/* Negative numbers */
+.gnc-class-negative-numbers {
+  color: #e67e80;
+}
+
+/* Highlighted text */
+.gnc-class-highlight {
+  color: #a7c080;
+}
+
+/* ── Toolbar ── */
+toolbar {
+  background-color: #272e33;
+}
+
+/* ── Main window notebook tabs (compact) ── */
+#gnc-id-main-window notebook tab {
+  min-height: 0px;
+  min-width: 0px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  margin-top: 0px;
+}
+
+/* ── Dense calendar (mini calendar sidebar) ── */
+#gnc-id-dense-calendar .frame,
+calendar .frame {
+  border-color: #543a48;
+  border-width: 1px;
+}
+#gnc-id-dense-calendar .header,
+calendar .header {
+  background-color: #272e33;
+  color: #d3c6aa;
+}
+#gnc-id-dense-calendar .primary {
+  background-color: #1e2326;
+}
+#gnc-id-dense-calendar .secondary {
+  background-color: #272e33;
+}
+#gnc-id-dense-calendar .markers {
+  background-color: #a7c080;
+}
+#gnc-id-dense-calendar-popup {
+  background-color: #272e33;
+  color: #d3c6aa;
+}
+#gnc-id-dense-calendar-popup treeview {
+  background-color: #2d3b41;
+}
+
+/* ── Progress bar ── */
+progressbar progress {
+  background-color: #a7c080;
+}
+
+/* ── Status bar ── */
+statusbar frame {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+statusbar label {
+  font-size: 12px;
+  color: #7a8478;
+}
+
+/* ── Reconcile window ── */
+#gnc-id-reconcile-totals * {
+  background-color: #272e33;
+  color: #d3c6aa;
+}
+.gnc-class-credits treeview {
+  background-color: #1e2326;
+  color: #a7c080;
+}
+.gnc-class-credits treeview:selected {
+  background-color: #a7c080;
+  color: #1e2326;
+}
+.gnc-class-debits treeview {
+  background-color: #1e2326;
+  color: #7fbbb3;
+}
+.gnc-class-debits treeview:selected {
+  background-color: #7fbbb3;
+  color: #1e2326;
+}
+
+/* ── Summary bar ── (child widgets draw their own bg, so target descendants) */
+#gnc-id-summarybar,
+#gnc-id-summarybar * {
+  background-color: #272e33;
+  color: #d3c6aa;
+}
+#gnc-id-summarybar button,
+#gnc-id-summarybar button:hover {
+  background-color: #2d3b41;
+  color: #d3c6aa;
+}
+#gnc-id-summarybar .gnc-class-highlight {
+  color: #e67e80;
+}

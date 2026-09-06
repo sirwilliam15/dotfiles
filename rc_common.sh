@@ -8,11 +8,22 @@ fi
 
 # Fall back to a known-good TERM over SSH when the server lacks the client's terminfo
 # (e.g. SSH-ing from Ghostty into a stock Ubuntu Server, which has no xterm-ghostty entry)
-if [ -n "$SSH_CONNECTION" ] && ! infocmp "$TERM" >/dev/null 2>&1; then
+#
+# Interactive only — `infocmp` is a subprocess, and via BASH_ENV this would run
+# for every script too. Nothing is lost: the interactive shell exports the
+# corrected TERM, so scripts it launches inherit the fixed value already.
+if [[ $- == *i* ]] && [ -n "$SSH_CONNECTION" ] && ! infocmp "$TERM" >/dev/null 2>&1; then
     export TERM=xterm-256color
 fi
 
-if command -v starship >/dev/null 2>&1 &&
+# Prompt setup — interactive shells only.
+# ~/.bashrc exports BASH_ENV pointing at this file, which means every
+# non-interactive bash also sources it. Without the $- guard, each script
+# invocation paid a starship subprocess plus the eval of its output: measured at
+# ~30ms per script vs ~5.6ms without. A prompt is meaningless in a script, so
+# there is nothing to lose by skipping it.
+if [[ $- == *i* ]] &&
+   command -v starship >/dev/null 2>&1 &&
    ! declare -F starship_precmd >/dev/null; then
     eval "$(starship init bash)"
 fi
@@ -32,6 +43,7 @@ alias ldesc='ls -lahS'
 if [ -n "$DOTFILES" ]; then
     alias clone="$DOTFILES/scripts/configure-repo.sh"
     alias rebase="$DOTFILES/scripts/rebase.sh"
+    alias sshrc="$DOTFILES/scripts/sshrc.sh"
 fi
 
 # Ceph Docker function

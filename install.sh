@@ -73,7 +73,11 @@ fi
 
 # macOS login shells read .bash_profile, not .bashrc — ensure it sources .bashrc
 if [[ "$platform" == "macos" ]]; then
-    if ! grep -qF 'source "$HOME/.bashrc"' "$HOME/.bash_profile" 2>/dev/null; then
+    # Match any form of sourcing .bashrc — `source "$HOME/.bashrc"`,
+    # `source /Users/you/.bashrc`, `. ~/.bashrc`. A literal-string check for one
+    # spelling misses the others and appends a duplicate, which makes login
+    # shells source .bashrc twice.
+    if ! grep -qE '^[^#]*(source|\.)[[:space:]]+.*\.bashrc' "$HOME/.bash_profile" 2>/dev/null; then
         echo "Adding .bashrc source to $HOME/.bash_profile"
         echo '[ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"' >> "$HOME/.bash_profile"
     else

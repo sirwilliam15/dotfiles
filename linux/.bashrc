@@ -44,6 +44,19 @@ esac
 # Color support for ls and grep
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+
+    # GNU defaults highlight special dirs on a green background — ow=34;42 is
+    # blue-on-green and tw=30;42 black-on-green, both unreadable. Swap to a black
+    # background with a bright foreground for contrast.
+    #   ow = other-writable (o+w, no sticky bit)
+    #   tw = sticky + other-writable (e.g. /tmp)
+    #   st = sticky only
+    # Drop the entries dircolors emitted before appending ours, so the result
+    # does not depend on whether ls honors the first or last duplicate key.
+    LS_COLORS=$(printf '%s' "$LS_COLORS" \
+        | sed -E 's/(^|:)(ow|tw|st)=[^:]*/\1/g; s/::+/:/g; s/^://; s/:$//')
+    export LS_COLORS="$LS_COLORS:ow=01;33;40:tw=01;33;40:st=01;36;40:"
+
     alias ls='ls --color=auto'
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'

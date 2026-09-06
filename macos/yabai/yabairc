@@ -23,8 +23,9 @@ yabai -m config right_padding 10
 yabai -m config focus_follows_mouse off
 yabai -m config window_origin_display focused
 
-# Reserve top space for SketchyBar
-yabai -m config external_bar all:32:0
+# Reserve top space for SketchyBar.
+# 36 = bar height 32 + y_offset 4; reserving only 32 left windows 4px under it.
+yabai -m config external_bar all:36:0
 
 # Mouse
 yabai -m config mouse_follows_focus off
@@ -55,8 +56,15 @@ if command -v jq >/dev/null 2>&1; then
   done
 fi
 
-for evt in window_created window_destroyed window_moved \
-           window_minimized window_deminimized window_title_changed \
+# Deliberately NOT subscribed:
+#   window_title_changed — measured at ~3.2/sec (~280k/day) on this machine, and
+#     the refresh only ever reads .app, never .title, so every one of those
+#     repaints produced a byte-identical bar. It was ~90% of the total churn.
+#   window_moved — fires continuously during a drag, and moving a window inside
+#     a space cannot change that space's app set. Cross-space moves are already
+#     covered by window_created/destroyed and space_change.
+for evt in window_created window_destroyed \
+           window_minimized window_deminimized \
            application_launched application_terminated; do
   yabai -m signal --add event="$evt" \
     label="sb_${evt}" \

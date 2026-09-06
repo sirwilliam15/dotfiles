@@ -12,10 +12,17 @@ if ! docker info >/dev/null 2>&1; then
   exit 0
 fi
 
+# Show a supabase glyph after the docker glyph when a local stack is running
+# (Supabase CLI names its containers supabase_<service>_<project>).
+ICON="󰡨"
+if docker ps 2>/dev/null | grep -q supabase; then
+  ICON="󰡨 󱐋"
+fi
+
 STATS="$(docker stats --no-stream --format '{{.MemUsage}}' 2>/dev/null)"
 
 if [ -z "$STATS" ]; then
-  sketchybar --set "$NAME" icon="󰡨" icon.color=0xff7a8478 label="0"
+  sketchybar --set "$NAME" icon="$ICON" icon.color=0xff7a8478 label="0"
   exit 0
 fi
 
@@ -36,4 +43,4 @@ LABEL="$(printf '%s\n' "$STATS" | awk '{
   else             printf "%.0fM", sum
 }')"
 
-sketchybar --set "$NAME" icon="󰡨" icon.color=0xff7fbbb3 label="$COUNT · $LABEL"
+sketchybar --set "$NAME" icon="$ICON" icon.color=0xff7fbbb3 label="$COUNT · $LABEL"

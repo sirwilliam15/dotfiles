@@ -60,9 +60,18 @@ for i in "${!SPACE_ICONS[@]}"; do
       background.height=22 \
       background.corner_radius=6 \
       script="$PLUGIN_DIR/space.sh" \
-      click_script="yabai -m space --focus $sid" \
-    --subscribe space.$sid windows_on_spaces
+      click_script="yabai -m space --focus $sid"
 done
+
+# --- Spaces icon refresher (hidden) ---
+# Deliberately NOT subscribed per-space: one item owns the repaint for all
+# spaces and does it in a single yabai query + single sketchybar call. See
+# plugins/windows_on_spaces.sh for why.
+sketchybar --add item spaces_watcher left \
+  --set spaces_watcher \
+    drawing=off \
+    script="$PLUGIN_DIR/windows_on_spaces.sh" \
+  --subscribe spaces_watcher windows_on_spaces space_change display_changed system_woke
 
 # --- Left: Front app ---
 sketchybar --add item front_app left \
@@ -81,7 +90,7 @@ sketchybar --add item front_app left \
 # --- Left: Docker ---
 sketchybar --add item docker left \
   --set docker \
-    update_freq=30 \
+    update_freq=120 \
     background.drawing=on \
     script="$PLUGIN_DIR/docker.sh" \
     click_script="open -a 'Docker'" \
@@ -112,7 +121,7 @@ sketchybar --add item wifi right \
 # --- Right: VPN ---
 sketchybar --add item vpn right \
   --set vpn \
-    update_freq=10 \
+    update_freq=30 \
     background.drawing=on \
     script="$PLUGIN_DIR/vpn.sh" \
     click_script="open -a 'Mullvad VPN'" \

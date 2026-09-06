@@ -1,20 +1,13 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-# shellcheck source=./icon_map.sh
-source "$CONFIG_DIR/plugins/icon_map.sh"
-
-SID="${NAME#space.}"
-
-ICONS=""
-if command -v yabai >/dev/null 2>&1; then
-  ICONS="$(yabai -m query --windows --space "$SID" 2>/dev/null \
-    | jq -r '[.[] | select(."is-minimized"==false) | select(.app != "Finder") | .app] | unique | .[]' \
-    | while IFS= read -r app; do
-        [ -z "$app" ] && continue
-        __icon_map "$app"
-        printf '%s' "$icon_result"
-      done)"
-fi
+# Selection highlight only — runs on space_change, which is user-initiated and
+# rare. The app icons in the label are owned by windows_on_spaces.sh, which
+# repaints every space in a single batch. Keeping the two concerns apart is what
+# lets this script skip the yabai query and the 36 KB icon_map source it used to
+# do on every window event.
+#
+# Colours and label text are independent sketchybar properties, so the two
+# scripts never clobber each other.
 
 if [ "$SELECTED" = "true" ]; then
   sketchybar --set "$NAME" \
@@ -22,13 +15,11 @@ if [ "$SELECTED" = "true" ]; then
     background.color=0xffa7c080 \
     icon.color=0xff1e2326 \
     label.color=0xff1e2326 \
-    label.drawing=on \
-    label="$ICONS"
+    label.drawing=on
 else
   sketchybar --set "$NAME" \
     background.drawing=off \
     icon.color=0xffd3c6aa \
     label.color=0xffd3c6aa \
-    label.drawing=on \
-    label="$ICONS"
+    label.drawing=on
 fi

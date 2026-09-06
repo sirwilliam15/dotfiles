@@ -144,7 +144,7 @@ function __icon_map() {
    "Bambu Studio")
         icon_result=":bambu_studio:"
         ;;
-   "MoneyMoney")
+   "MoneyMoney" | "Gnucash" | "GnuCash")
         icon_result=":bank:"
         ;;
    "Basecamp" | "Basecamp.app")
@@ -200,6 +200,9 @@ function __icon_map() {
         ;;
    "Brain.fm")
         icon_result=":brainfm:"
+        ;;
+   "DuckDuckGo")
+        icon_result=":safari:"
         ;;
    "Brave Browser")
         icon_result=":brave_browser:"

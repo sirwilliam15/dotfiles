@@ -2,6 +2,14 @@
 
 [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
+# macOS builds the system PATH with path_helper, which only runs from
+# /etc/profile — login shells. `ssh host 'cmd'` is neither login nor
+# interactive, so it inherits sshd's hardcoded /usr/bin:/bin:/usr/sbin:/sbin:
+# no /usr/local/bin (Docker Desktop's CLI symlinks), no /opt/homebrew/bin.
+# path_helper dedupes, so re-running it in a login shell changes nothing.
+[ -x /usr/libexec/path_helper ] && eval "$(/usr/libexec/path_helper -s)"
+
+# Fallback for machines where brew never wrote /etc/paths.d/homebrew.
 [[ ":$PATH:" != *":/opt/homebrew/bin:"* ]] && export PATH="/opt/homebrew/bin:$PATH"
 
 alias grep="/opt/homebrew/bin/ggrep --color=auto"
